@@ -17,4 +17,3 @@ pipeline {
     }
 }
 
-# 여기서 git url : '내 깃허브 nodejs-app 주소' 이다.
