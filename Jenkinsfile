@@ -15,7 +15,7 @@ pipeline {
 	stage('docker hub push') {
             steps {
                 sh '''
- 		   docker login -u manuma159159 -p test01
+ 		   docker login -u manuma159159 -p rlatjddmsdmlrnrmf123!@#
                    docker push manuma159159/nodejsapp
 		'''
             }
