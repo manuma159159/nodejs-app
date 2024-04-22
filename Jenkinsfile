@@ -1,12 +1,7 @@
 pipeline {
-    agent any
+    agent { label 'agent' }
 
     stages {
-        stage('pre cleanup') {
-            steps {
-                sh 'docker compose down'
-            }
-        }
         stage('git scm update') {
             steps {
                 git url: 'https://github.com/manuma159159/nodejs-app.git', branch: 'main'
@@ -14,11 +9,21 @@ pipeline {
         }
         stage('docker build & deploy') {
             steps {
-      				sh '''
-      				docker compose up --build -d
-              '''
-            }	
+		sh 'IMAGE_NAME=manuma159159/nodejsapp docker compose build'
+            }
+        }
+	stage('docker hub push') {
+            steps {
+                sh '''
+ 		   docker login -u siestageek -p ????
+                   docker push manuma159159/nodejsapp
+		'''
+            }
+        }
+	stage('microk8s run pod') {
+            steps {
+                sh ' microk8s kubectl run app1 --image=manuma159159/nodejsapp '
+            }
         }
     }
 }
-
